@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "1085784541976",
-    "project_id": "chat-meta-35594",
-    "storage_bucket": "chat-meta-35594.appspot.com"
+    "project_number": "64533756427",
+    "project_id": "chat-meta-a6a42",
+    "storage_bucket": "chat-meta-a6a42.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1085784541976:android:bc17d754aa5f903566ec6d",
+        "mobilesdk_app_id": "1:64533756427:android:9ee6c735d575d6c004e50e",
         "android_client_info": {
           "package_name": "com.example.chat_application_iub_cse464"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDslDE6KXEuLrH_z2HXB4A1KMNyYp8aBp4"
+          "current_key": "AIzaSyA2iAlVXj_aTAjNuKnojoktuJRPAYwhu4w"
         }
       ],
       "services": {

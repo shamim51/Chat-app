@@ -30,25 +30,38 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Chat Application',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: MyColor.primary),
-        useMaterial3: true,
-      ),
-      home:  StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, AsyncSnapshot snapshot){
-          if(snapshot.hasData )
-            {
-              return const Dashboard();
-            }
-          else
-            {
-              return const SignUp();
-            }
-        },
-      )
+        title: 'Chat Application',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: MyColor.primary),
+          useMaterial3: true,
+        ),
+        home: Scaffold(
+            appBar: AppBar(
+              //leading: Icon(Icons.adb),
+              title: Text("Chat App"),
+              centerTitle: true,
+              actions: [
+                Icon(Icons.logout),
+              ],
+              backgroundColor: Colors.cyan,
+            ),
+            drawer: Drawer(),
+            body:StreamBuilder(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (context, AsyncSnapshot snapshot){
+                if(snapshot.hasData )
+                {
+                  return const Dashboard();
+                }
+                else
+                {
+                  return const SignUp();
+                }
+              },
+            )
+        )
+
     );
   }
 }
