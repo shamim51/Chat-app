@@ -49,7 +49,7 @@ class UserList extends StatelessWidget {
               // title: Text(user!['name']),
               // subtitle: Text(user['email']),
               title: Text(user['name'] as String),
-              subtitle: Text(user['email'] as String),            );
+            );
           },
         );
       }

@@ -3,6 +3,7 @@ import 'package:chat_application_iub_cse464/screens/chat/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+
 import '../../const_config/color_config.dart';
 import '../../const_config/text_config.dart';
 import '../../services/utils/helper_functions.dart';
@@ -19,12 +20,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  FirebaseAuth auth = FirebaseAuth.instance;
+
   final formKey = GlobalKey<FormState>();
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
-  final auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {

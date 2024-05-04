@@ -7,7 +7,7 @@ import 'package:random_avatar/random_avatar.dart';
 import '../../../const_config/color_config.dart';
 import '../../../const_config/text_config.dart';
 
-class ProfilePage extends StatefulWidget {
+/*class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
   @override
@@ -100,4 +100,90 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+}*/
+
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({Key? key}) : super(key: key);
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
 }
+
+class _ProfilePageState extends State<ProfilePage> {
+  @override
+  Widget build(BuildContext context) {
+    final auth = FirebaseAuth.instance;
+    final firebase = FirebaseFirestore.instance;
+
+    return Scaffold(
+      backgroundColor: MyColor.scaffoldColor,
+      body: StreamBuilder(
+        stream: firebase.collection("users").snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData && snapshot.connectionState == ConnectionState.active) {
+            var usersData = snapshot.data!.docs.map((doc) => UserData.fromMap(doc.data())).toList();
+
+            return ListView.builder(
+              itemCount: usersData.length,
+              itemBuilder: (context, index) {
+                var user = usersData[index];
+
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      RandomAvatar(
+                        user.name.toString(),
+                        trBackground: false,
+                        height: 50,
+                        width: 50,
+                      ),
+                      SizedBox(width: 10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("User Name", style: TextDesign().smallTitle.copyWith(color: MyColor.black)),
+                          Text(
+                            user.name.toString(),
+                            style: TextDesign().bodyTextSmall.copyWith(),
+                          ),
+                          SizedBox(height: 5),
+                          Text("Email", style: TextDesign().smallTitle.copyWith(color: MyColor.black)),
+                          Text(
+                            user.email.toString(),
+                            style: TextDesign().bodyTextSmall.copyWith(),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text("Last Login", style: TextDesign().smallTitle.copyWith(color: MyColor.black)),
+                          Text(
+                            user.lastLogin.toString(), // Assuming you have lastLogin property in UserData
+                            style: TextDesign().bodyTextSmall.copyWith(),
+                          ),
+                          SizedBox(height: 5),
+                          Text("Active", style: TextDesign().smallTitle.copyWith(color: MyColor.black)),
+                          Text(
+                            user.isActive.toString(), // Assuming you have isActive property in UserData
+                            style: TextDesign().bodyTextSmall.copyWith(),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+    );
+  }
+}
+
