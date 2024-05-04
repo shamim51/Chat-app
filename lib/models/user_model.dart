@@ -14,18 +14,27 @@ class UserData {
   String? email;
   List<dynamic>? myChats;
 
+  String? lastLogin; // New field for last login time
+  bool? isActive; // New field for active status
+
   UserData({
     this.name,
     this.uuid,
     this.email,
     this.myChats,
+    this.lastLogin,
+    this.isActive,
   });
 
   factory UserData.fromMap(Map<String, dynamic> json) => UserData(
     name: json["name"],
     uuid: json["uuid"],
     email: json["email"],
+
     myChats: json["my_chats"] == null ? [] : List<dynamic>.from(json["my_chats"]!.map((x) => x)),
+
+    lastLogin: json["last_login"],
+    isActive: json["is_active"],
   );
 
   Map<String, dynamic> toMap() => {
@@ -33,5 +42,7 @@ class UserData {
     "uuid": uuid,
     "email": email,
     "my_chats": myChats == null ? [] : List<dynamic>.from(myChats!.map((x) => x)),
+    "last_login": lastLogin,
+    "is_active": isActive,
   };
 }
