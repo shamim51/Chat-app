@@ -47,7 +47,7 @@ class _SignUpState extends State<SignUp> {
   @override
   void initState() {
     // TODO: implement initState
-    usernameController.text = "IUB CSE464";
+    usernameController.text = "user";
     onUserNameChange();
     super.initState();
   }
