@@ -29,7 +29,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     // TODO: implement initState
-    updateLastLoginTime(user!);
+    updateLastLoginTimeAndIsActive(user!);
 
 
     /// This function runs after the widget is build....
@@ -40,7 +40,7 @@ class _DashboardState extends State<Dashboard> {
     super.initState();
   }
 
-  Future<void> updateLastLoginTime(User user) async {
+  Future<void> updateLastLoginTimeAndIsActive(User user) async {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(now);
 
@@ -57,6 +57,7 @@ class _DashboardState extends State<Dashboard> {
     try {
       await FirebaseFirestore.instance.collection('users').doc(userId).update({
         'last_login': formattedDate,
+        'is_active': true,
       });
     } catch (error) {
       print('Failed to update last login time: $error');
