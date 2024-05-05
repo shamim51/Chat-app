@@ -3,6 +3,8 @@ import 'package:chat_application_iub_cse464/screens/chat/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 import '../../const_config/color_config.dart';
 import '../../const_config/text_config.dart';
@@ -22,10 +24,13 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   FirebaseAuth auth = FirebaseAuth.instance;
 
+
+
   final formKey = GlobalKey<FormState>();
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                                 await auth.signInWithEmailAndPassword(
                                     email: emailController.text.trim(),
                                     password: passwordController.text.trim()
-                                ).then((value) {
+                                ).then((value) async {
                                   if(value.user != null)
                                   {
                                     showSnackBar(
@@ -92,6 +97,10 @@ class _LoginPageState extends State<LoginPage> {
                                         message: "Welcome to Chat META",
                                         failureMessage: false
                                     );
+                                    // Update last login time in Firestore
+                                    // print("------------------------user Id----------------------");
+                                    // print(user?.uid);
+
                                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Dashboard()), (route) => false);
                                   }
                                   else

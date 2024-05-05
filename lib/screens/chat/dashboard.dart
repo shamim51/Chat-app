@@ -3,10 +3,12 @@ import 'package:chat_application_iub_cse464/screens/auth/sign_up.dart';
 import 'package:chat_application_iub_cse464/screens/chat/chat_tabs/chats.dart';
 import 'package:chat_application_iub_cse464/screens/chat/chat_tabs/discover.dart';
 import 'package:chat_application_iub_cse464/screens/chat/chat_tabs/profile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 import '../../const_config/text_config.dart';
 
@@ -21,19 +23,45 @@ class _DashboardState extends State<Dashboard> {
   int selectedIndex = 1;
   final pageViewController = PageController(initialPage: 1);
 
+  User? user = FirebaseAuth.instance.currentUser;//getting the user id
 
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //
-  //
-  //   /// This function runs after the widget is build....
-  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-  //
-  //     pageViewController.jumpToPage(1);
-  //   });
-  //   super.initState();
-  // }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    updateLastLoginTime(user!);
+
+
+    /// This function runs after the widget is build....
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //
+    //   pageViewController.jumpToPage(1);
+    // });
+    super.initState();
+  }
+
+  Future<void> updateLastLoginTime(User user) async {
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(now);
+
+    print("------------------------------------------------");
+    print(formattedDate);
+    print("------------------------------------------------");
+
+    print("------------------------user Id----------------------");
+    print(user.uid);
+
+    String userId = "";
+    userId = user.uid;
+
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(userId).update({
+        'last_login': formattedDate,
+      });
+    } catch (error) {
+      print('Failed to update last login time: $error');
+    }
+  }
 
 
   @override
